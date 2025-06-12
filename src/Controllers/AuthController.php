@@ -34,6 +34,7 @@ class AuthController extends AppController
         $url = "http://$_SERVER[HTTP_HOST]";
         $_SESSION['user'] = [
             'email' => $user->getEmail(),
+            'id' => $user->getId(),
         ];
         header("Location: $url/dashboard");
         exit;
@@ -71,9 +72,17 @@ class AuthController extends AppController
             return;
         }
 
-        $user = new User($email, $password);
+        $user = new User(null, $email, $password);
         $userRepository->saveUser($user);
 
         $this->render("Auth/login", ["success" => "Registration successful! You can now log in."]);
+    }
+
+    public function logout()
+    {
+        session_unset();
+        session_destroy();
+        header("Location: /index");
+        exit;
     }
 }

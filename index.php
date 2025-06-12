@@ -9,9 +9,11 @@ $path = parse_url($path, PHP_URL_PATH);
 //Pages routes
 Routing::get('index', 'DefaultController');
 Routing::get('register', 'DefaultController');
+Routing::get('dashboard', 'DashboardController');
 
 //API routes
 Routing::post('login', 'AuthController');
 Routing::post('register', 'AuthController');
+Routing::get('logout', 'AuthController');
 
 Routing::run($path);

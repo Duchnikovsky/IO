@@ -14,6 +14,16 @@ class DefaultController extends AppController
         $this->render("Auth/login");
     }
 
+    public function dashboard()
+    {
+        if (!$this->isLoggedIn()) {
+            header("Location: /index");
+            exit;
+        }
+
+        $this->render("dashboard");
+    }
+
     public function register()
     {
         if ($this->isLoggedIn()) {
