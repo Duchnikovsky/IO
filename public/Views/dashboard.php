@@ -10,7 +10,7 @@
     <link href="public/styles/utility/fonts.css" rel="stylesheet">
     <link href="public/styles/utility/UI.css" rel="stylesheet">
 
-    <title>Sign In</title>
+    <title>Dashboard</title>
 </head>
 
 <body id="dashboard-page" class="flex-row-center-center">
