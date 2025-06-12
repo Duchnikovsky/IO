@@ -35,6 +35,10 @@
                         <td><?= htmlspecialchars($employee['first_name']) ?></td>
                         <td><?= htmlspecialchars($employee['last_name']) ?></td>
                         <td><?= htmlspecialchars($employee['hourly_rate']) ?> zł/h</td>
+                        <form action="/employees/delete" method="POST" style="display:inline;">
+                            <input type="hidden" name="employee_id" value="<?= $employee['id'] ?>">
+                            <button type="submit" onclick="return confirm('Na pewno chcesz usunąć tego pracownika?')">🗑️</button>
+                        </form>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

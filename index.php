@@ -11,10 +11,12 @@ Routing::get('index', 'DefaultController');
 Routing::get('register', 'DefaultController');
 Routing::get('dashboard', 'DashboardController');
 Routing::get('employees', 'EmployeeController');
+Routing::get('add', 'EmployeeController');
 
 //API routes
 Routing::post('login', 'AuthController');
 Routing::post('register', 'AuthController');
 Routing::get('logout', 'AuthController');
+Routing::post('add', 'EmployeeController');
 
 Routing::run($path);
