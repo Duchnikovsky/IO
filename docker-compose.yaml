@@ -35,7 +35,13 @@ services:
       - .:/app
     networks:
       - pg-network
-    command: ["sh", "-c", "php setup.php && php-fpm"]
+    command: >
+      sh -c "
+        until pg_isready -h db -p 5432; do
+          echo 'Waiting for postgress...'; sleep 1;
+        done;
+        php setup.php && php-fpm
+      "
 
   pgadmin:
     image: dpage/pgadmin4:latest
