@@ -17,7 +17,7 @@ class DefaultController extends AppController
     public function dashboard()
     {
         if (!$this->isLoggedIn()) {
-            header("Location: /index");
+            header("Location: /");
             exit;
         }
 

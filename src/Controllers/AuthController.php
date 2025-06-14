@@ -82,7 +82,7 @@ class AuthController extends AppController
     {
         session_unset();
         session_destroy();
-        header("Location: /index");
+        header("Location: /");
         exit;
     }
 }

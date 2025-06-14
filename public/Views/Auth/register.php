@@ -35,7 +35,7 @@
             </div>
             <button type="submit" class="flex-row-center-center">Sign Up</button>
         </form>
-        <p class="auth-subtext">Already have an account? <a href="index">Sign In</a></p>
+        <p class="auth-subtext">Already have an account? <a href="/">Sign In</a></p>
     </div>
 
 </body>
