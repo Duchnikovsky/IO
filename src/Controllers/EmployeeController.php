@@ -23,7 +23,7 @@ class EmployeeController extends AppController
     public function add()
     {
         if (!$this->isLoggedIn()) {
-            header('Location: /Auth/login');
+            header('Location: /');
             exit;
         }
 
@@ -32,22 +32,21 @@ class EmployeeController extends AppController
             return;
         }
 
-        if ($this->getRequestMethod() === 'POST') {
-            $first = $_POST['first_name'] ?? '';
-            $last = $_POST['last_name'] ?? '';
-            $rate = $_POST['hourly_rate'] ?? '';
+      
+        $first = $_POST['first_name'] ?? '';
+        $last = $_POST['last_name'] ?? '';
+        $rate = $_POST['hourly_rate'] ?? '';
 
-            if (empty($first) || empty($last) || !is_numeric($rate)) {
-                $this->render("Employee/add", ['error' => 'Wszystkie pola są wymagane.']);
-                return;
-            }
-
-            $user = $_SESSION['user'];
-            $repo = new EmployeeRepository();
-            $repo->createEmployee($user['id'], $first, $last, $rate);
-
-            header("Location: /Employee/list");
+        if (empty($first) || empty($last) || !is_numeric($rate)) {
+            $this->render("Employee/add", ['error' => 'Wszystkie pola są wymagane.']);
+            return;
         }
+
+        $repo = new EmployeeRepository();
+        $repo->createEmployee($_SESSION['user']['id'], $first, $last, $rate);
+
+        header("Location: /employees");
+    
     }
 
     public function delete()

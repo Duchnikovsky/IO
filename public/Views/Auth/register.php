@@ -10,7 +10,7 @@
     <link href="public/styles/utility/fonts.css" rel="stylesheet">
     <link href="public/styles/utility/UI.css" rel="stylesheet">
 
-    <title>Sign In</title>
+    <title>Sign Up</title>
 </head>
 
 <body id="auth-page" class="flex-row-center-center">

@@ -23,5 +23,6 @@ Routing::post('login',     'AuthController');
 Routing::post('register',  'AuthController');
 Routing::get ('logout',    'AuthController');
 Routing::post('add',       'EmployeeController');
+Routing::post('delete',    'EmployeeController');
 
 Routing::run($path);

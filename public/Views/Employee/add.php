@@ -15,17 +15,17 @@
 </head>
 
 <body>
-
+    <?php include __DIR__ . '/../partials/header.php'; ?>
     <h1>Dodaj nowego pracownika</h1>
 
-    <form action="/employees/add" method="POST" class="employee-form">
+    <form action="/add" method="POST" class="employee-form">
         <div class="employee-input">
-            <label for="name">Imie</label>
-            <input id="name" type="text" name="name" class="input" required placeholder="Wprowadź imię pracownika">
+            <label for="first_name">Imie</label>
+            <input id="first_name" type="text" name="first_name" class="input" required placeholder="Wprowadź imię pracownika">
         </div>
         <div class="employee-input">
-            <label for="surname">Nazwisko</label>
-            <input id="surname" type="text" name="surname" class="input" required placeholder="Wprowadź nazwisko pracownika">
+            <label for="last_name">Nazwisko</label>
+            <input id="last_name" type="text" name="last_name" class="input" required placeholder="Wprowadź nazwisko pracownika">
         </div>
         <div class="employee-input">
             <label for="hourly_rate">Stawka godzinowa (zł)</label>

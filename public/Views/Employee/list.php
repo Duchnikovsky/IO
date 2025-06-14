@@ -15,11 +15,16 @@
 </head>
 
 <body>
+    <?php include __DIR__ . '/../partials/header.php'; ?>
 
-    <h1>Twoi pracownicy</h1>
+    <!-- nagłówek + przycisk -->
+    <div class="list-header">
+        <h1>Twoi pracownicy</h1>
+        <a href="/add" class="add-btn">+ Dodaj pracownika</a>
+    </div>
 
     <?php if (empty($employees)) : ?>
-        <p>Brak pracowników. Dodaj pierwszego!</p>
+        <p class="no-data">Brak pracowników. Dodaj pierwszego!</p>
     <?php else : ?>
         <table>
             <thead>
@@ -27,6 +32,7 @@
                     <th>Imię</th>
                     <th>Nazwisko</th>
                     <th>Stawka godzinowa</th>
+                    <th style="width:80px"></th> <!-- kolumna na kosz -->
                 </tr>
             </thead>
             <tbody>
@@ -35,18 +41,19 @@
                         <td><?= htmlspecialchars($employee['first_name']) ?></td>
                         <td><?= htmlspecialchars($employee['last_name']) ?></td>
                         <td><?= htmlspecialchars($employee['hourly_rate']) ?> zł/h</td>
-                        <form action="/employees/delete" method="POST" style="display:inline;">
-                            <input type="hidden" name="employee_id" value="<?= $employee['id'] ?>">
-                            <button type="submit" onclick="return confirm('Na pewno chcesz usunąć tego pracownika?')">🗑️</button>
-                        </form>
+                        <td>
+                            <form action="/delete" method="POST" onsubmit="return confirm('Na pewno chcesz usunąć tego pracownika?')">
+                                <input type="hidden" name="employee_id" value="<?= $employee['id'] ?>">
+                                <button type="submit" class="trash-btn">🗑️</button>
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     <?php endif; ?>
 
-    <a href="/dashboard">← Wróć do dashboardu</a>
-
+    <a href="/dashboard" class="back-link">← Wróć do dashboardu</a>
 </body>
 
 </html>

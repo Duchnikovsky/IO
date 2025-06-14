@@ -14,6 +14,7 @@
 </head>
 
 <body id="dashboard-page" class="flex-row-center-center">
+    <?php include __DIR__ . '/partials/header.php'; ?>
     <h1>Panel główny</h1>
 
     <div class="dashboard-box">
