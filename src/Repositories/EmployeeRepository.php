@@ -4,15 +4,24 @@ class EmployeeRepository extends Repository
 {
     public function getEmployeesByUser($userId)
     {
-        $stmt = $this->db->connect()->prepare('
-            SELECT id, first_name, last_name, hourly_rate
-            FROM employees
-            WHERE user_id = :user_id
-            ORDER BY last_name
-        ');
+        $stmt = $this->db->connect()->prepare("
+        SELECT 
+            e.id,
+            e.first_name,
+            e.last_name,
+            e.hourly_rate,
+            COALESCE(SUM(w.hours_worked), 0) AS monthly_hours
+        FROM employees e
+        LEFT JOIN work_logs w ON e.id = w.employee_id
+            AND DATE_TRUNC('month', w.date) = DATE_TRUNC('month', CURRENT_DATE)
+        WHERE e.user_id = :user_id
+        GROUP BY e.id
+        ORDER BY e.last_name
+    ");
         $stmt->execute(['user_id' => $userId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     public function createEmployee($userId, $first, $last, $rate)
     {
@@ -72,6 +81,21 @@ class EmployeeRepository extends Repository
             'last_name' => $lastName,
             'hourly_rate' => $hourlyRate,
             'id' => $id
+        ]);
+    }
+
+    public function logHours(int $employeeId, string $date, float $hours): void
+    {
+        $stmt = $this->db->connect()->prepare("
+        INSERT INTO work_logs (employee_id, date, hours_worked)
+        VALUES (:employee_id, :date, :hours)
+        ON CONFLICT (employee_id, date)
+        DO UPDATE SET hours_worked = EXCLUDED.hours_worked
+    ");
+        $stmt->execute([
+            'employee_id' => $employeeId,
+            'date' => $date,
+            'hours' => $hours
         ]);
     }
 }

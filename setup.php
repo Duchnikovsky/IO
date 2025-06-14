@@ -2,7 +2,7 @@
 
 require_once 'Database.php';
 
-$db = (new Database())->connect(); 
+$db = (new Database())->connect();
 
 $db->exec("
 CREATE TABLE IF NOT EXISTS users (
@@ -33,6 +33,12 @@ CREATE TABLE IF NOT EXISTS work_logs (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ");
+
+$db->exec("
+    CREATE UNIQUE INDEX IF NOT EXISTS uniq_employee_date
+    ON work_logs(employee_id, date
+);"
+);
 
 $db->exec("
 CREATE TABLE IF NOT EXISTS payrolls (

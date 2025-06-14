@@ -32,6 +32,8 @@
                     <th>Imię</th>
                     <th>Nazwisko</th>
                     <th>Stawka godzinowa</th>
+                    <th>Przepracowane godziny</th>
+                    <th style="width:32px"></th>
                     <th style="width:32px"></th>
                     <th style="width:32px"></th>
                 </tr>
@@ -42,6 +44,7 @@
                         <td><?= htmlspecialchars($employee['first_name']) ?></td>
                         <td><?= htmlspecialchars($employee['last_name']) ?></td>
                         <td><?= htmlspecialchars($employee['hourly_rate']) ?> zł/h</td>
+                        <td><?= htmlspecialchars($employee['monthly_hours']) ?> h</td>
                         <td>
                             <form action="/delete" method="POST" class="employee-form-button" onsubmit="return confirm('Na pewno chcesz usunąć tego pracownika?')">
                                 <input type="hidden" name="employee_id" value="<?= $employee['id'] ?>">
@@ -52,6 +55,13 @@
                             <a class="employee-form-button" href="edit?id=<?= $employee['id'] ?>">
                                 <button type="button" class="employee-btn">
                                     ⚙️
+                                </button>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="employee-form-button" href="/logHours?id=<?= $employee['id'] ?>">
+                                <button type="button" class="employee-btn">
+                                    🕒
                                 </button>
                             </a>
                         </td>

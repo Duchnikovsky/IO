@@ -99,12 +99,51 @@ class EmployeeController extends AppController
                 ]);
                 return;
             }
-            
+
             $repo = new EmployeeRepository();
             $repo->update((int)$id, $firstName, $lastName, (float)$rate);
 
             $url = "http://$_SERVER[HTTP_HOST]/employees";
             header("Location: $url");
+            exit;
+        }
+    }
+
+    public function logHours()
+    {
+        if (!$this->isLoggedIn()) {
+            header('Location: /');
+            exit;
+        }
+
+        $repo = new EmployeeRepository();
+
+        if ($this->getRequestMethod() === 'GET') {
+            $id = $_GET['id'] ?? null;
+            if (!$id) {
+                header("Location: /employees");
+                exit;
+            }
+
+            $employee = $repo->getById((int)$id);
+            $this->render("Employee/log_hours", ["employee" => $employee]);
+        }
+
+        if ($this->getRequestMethod() === 'POST') {
+            $employeeId = $_POST['employee_id'] ?? null;
+            $date = $_POST['date'] ?? '';
+            $hours = $_POST['hours'] ?? '';
+
+            if (!$employeeId || !$date || !$hours || !is_numeric($hours)) {
+                $this->render("Employee/log_hours", [
+                    "error" => "Wszystkie pola są wymagane.",
+                    "employee" => ["id" => $employeeId]
+                ]);
+                return;
+            }
+
+            $repo->logHours((int)$employeeId, $date, (float)$hours);
+            header("Location: /employees");
             exit;
         }
     }
