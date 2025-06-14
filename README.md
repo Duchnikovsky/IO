@@ -14,7 +14,7 @@
 
 ---
 
-### 1. Wprowadzenie i cel projektu
+### 1. Wprowadzenie, cel i misja projektu
 
 Payroll App to lekka aplikacja webowa dla mikro‑ i małych firm, której celem jest ułatwienie ewidencji pracowników, rejestrowania godzin oraz automatycznego obliczania wypłat. Projekt demonstruje pełny cykl wytwórczy:
 
@@ -23,6 +23,25 @@ Payroll App to lekka aplikacja webowa dla mikro‑ i małych firm, której celem
 - implementacja w **czystym PHP 8.2** (MVC),
 - pełna konteneryzacja **Docker Compose**,
 - idempotentne migracje **PostgreSQL**.
+
+### Cele biznesowe:
+| Nazwa                     | Opis                                          | Kryteria akceptacyjne                        |
+| ------------------------- | --------------------------------------------- | -------------------------------------------- |
+| Automatyzacja rozliczeń   | Skrócenie czasu tworzenia wypłat o 80%        | Wypłaty liczone automatycznie z godzin       |
+| Historia i przejrzystość  | Umożliwienie przeglądu wszystkich operacji    | Lista pracowników, godziny, wypłaty widoczne |
+| Niskie koszty użytkowania | Wersja offline lub hostowana lokalnie/darmowo | Brak opłat miesięcznych                      |
+
+
+### Cele klienta:
+| Nazwa              | Opis                                         | Kryteria akceptacyjne                 |
+| ------------------ | -------------------------------------------- | ------------------------------------- |
+| Intuicyjna obsługa | Prosty interfejs, bez konieczności szkolenia | Dodanie pracownika < 1 minuta         |
+| Prywatność danych  | Każdy użytkownik widzi tylko swoje dane      | Filtracja po `user_id`                |
+| Mobilność          | Możliwość korzystania z telefonu / tabletu   | UI działa poprawnie w mobilnej wersji |
+
+
+<b>Misja:</b>
+Stworzyć prostą, lekką i dostępną aplikację webową dla małych firm, która umożliwia zarządzanie pracownikami, rejestrację czasu pracy oraz automatyczne generowanie i zatwierdzanie wypłat.
 
 → Interaktywny diagram w Miro: [Board](https://miro.com/welcomeonboard/bHpkUy90cHBqaVhEeHZKVXlRWUpMeTRvaDZzOFVjcFJJZFp6TDRoY3JMcU96MGZDUWJNSzhqU2lnZWxUbWlzc2dabmwrNEdGRTlaSWFLMDZWMDVkNTQ0Ukp5anhDc0p6SmtCMTJ2TGFiRHdHcTlUNTR5cEVibW0yR0Rsd1NlV0N0R2lncW1vRmFBVnlLcVJzTmdFdlNRPT0hdjE=?share_link_id=172719750683)
 
@@ -35,6 +54,17 @@ Payroll App to lekka aplikacja webowa dla mikro‑ i małych firm, której celem
 | Menadżer firmy | Dodaje pracowników, zatwierdza wypłaty, pobiera raporty. |
 | Pracownik      | Dostarcza przepracowane godziny (pośrednio).             |
 | System bankowy | Otrzymuje zlecenie wypłaty i zwraca status _paid_.       |
+
+
+### Analiza istniejących rozwiązań
+| Narzędzie          | Plusy                                   | Minusy                                         |
+| ------------------ | --------------------------------------- | ---------------------------------------------- |
+| **Symfonia ERP**   | zaawansowane funkcje płacowe            | zbyt skomplikowane i kosztowne dla małych firm |
+| **Excel**          | prostota, elastyczność                  | brak walidacji, brak historii, ręczne liczenie |
+| **Toggl Track**    | dobre do rejestracji czasu              | brak wypłat i integracji płacowych             |
+| **moja aplikacja** | prostota, pełna kontrola, niskie koszty | ograniczone funkcje podatkowe                  |
+
+
 
 ---
 
@@ -63,7 +93,7 @@ Payroll App to lekka aplikacja webowa dla mikro‑ i małych firm, której celem
 
 | Kontener       | Technologia       | Kluczowa odpowiedzialność    |
 | -------------- | ----------------- | ---------------------------- |
-| Front‑end SPA  | React             | UI, komunikacja REST         |
+| Front‑end SPA  | HTML, JS          | UI, komunikacja REST         |
 | API / Back‑end | PHP 8.2‑FPM (MVC) | Logika domenowa, autoryzacja |
 | DB             | PostgreSQL 16     | Persistencja danych          |
 | PgAdmin        | dpage/pgadmin4    | GUI bazy (dev‑ops)           |
