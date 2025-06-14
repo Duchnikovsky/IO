@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS work_logs (
 );
 ");
 
-$db->exec("
+$db->exec(
+    "
     CREATE UNIQUE INDEX IF NOT EXISTS uniq_employee_date
     ON work_logs(employee_id, date
 );"
@@ -51,6 +52,12 @@ CREATE TABLE IF NOT EXISTS payrolls (
     is_approved BOOLEAN DEFAULT FALSE,
     is_paid BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+");
+
+$db->exec("
+ALTER TABLE payrolls
+ADD CONSTRAINT unique_employee_month UNIQUE (employee_id, from_date, to_date
 );
 ");
 

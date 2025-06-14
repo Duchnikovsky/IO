@@ -19,6 +19,8 @@ Routing::get('employees',  'EmployeeController');
 Routing::get('add',        'EmployeeController');
 Routing::get('edit',       'EmployeeController');
 Routing::get('logHours', 'EmployeeController');
+Routing::get('payrolls', 'PayrollController');
+
 
 /* API */
 Routing::post('login',     'AuthController');
@@ -28,5 +30,7 @@ Routing::post('add',       'EmployeeController');
 Routing::post('delete',    'EmployeeController');
 Routing::post('edit',    'EmployeeController');
 Routing::post('logHours', 'EmployeeController');
+Routing::get('generate', 'PayrollController');
+Routing::post('updateStatus', 'PayrollController');
 
 Routing::run($path);

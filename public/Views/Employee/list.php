@@ -37,6 +37,7 @@
                     <th style="width:32px"></th>
                     <th style="width:32px"></th>
                     <th style="width:32px"></th>
+                    <th style="width:32px"></th>
                 </tr>
             </thead>
             <tbody>
@@ -64,6 +65,13 @@
                             <a class="employee-form-button" href="/logHours?id=<?= $employee['id'] ?>">
                                 <button type="button" class="employee-btn">
                                     🕒
+                                </button>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="employee-form-button" href="/generate?id=<?= $employee['id'] ?>">
+                                <button type="button" class="employee-btn">
+                                    💵
                                 </button>
                             </a>
                         </td>
