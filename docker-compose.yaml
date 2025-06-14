@@ -18,10 +18,7 @@ services:
     build:
       context: .
       dockerfile: docker/db/Dockerfile
-    environment:
-      POSTGRES_DB: db
-      POSTGRES_USER: docker
-      POSTGRES_PASSWORD: docker
+    env_file: .env
     ports:
       - "5433:5432"
     networks:
@@ -31,24 +28,23 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+    env_file: .env
     volumes:
       - .:/app
     networks:
       - pg-network
     command: >
       sh -c "
-        until pg_isready -h db -p 5432; do
-          echo 'Waiting for postgress...'; sleep 1;
-        done;
+        until pg_isready -h $${DB_HOST} -p $${DB_PORT}; do
+          echo '⏳  Waiting for Postgres...' ; sleep 1 ;
+        done ;
         php setup.php && php-fpm
       "
 
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: pg-admin3
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+    env_file: .env
     ports:
       - "5050:80"
     networks:

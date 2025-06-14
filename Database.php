@@ -1,36 +1,29 @@
 <?php
 
-require_once 'config.php';
-
 class Database
 {
-    private $username;
-    private $password;
-    private $dbHost;
-    private $dbName;
+    private PDO $conn;
 
     public function __construct()
     {
-        $this->username = DB_USERNAME;
-        $this->password = DB_PASSWORD;
-        $this->dbHost = DB_HOST;
-        $this->dbName = DB_NAME;
+        $host = getenv('DB_HOST');
+        $port = getenv('DB_PORT');
+        $name = getenv('DB_NAME');
+        $user = getenv('DB_USER');
+        $pass = getenv('DB_PASSWORD');
+
+        $dsn = "pgsql:host={$host};port={$port};dbname={$name}";
+
+        $this->conn = new PDO(
+            $dsn,
+            $user,
+            $pass,
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+        );
     }
 
-    public function connect()
+    public function connect(): PDO
     {
-        try {
-            $conn = new PDO(
-                "pgsql:host={$this->dbHost};port=5432;dbname={$this->dbName}",
-                $this->username,
-                $this->password,
-                ["sslmode" => "prefer"]
-            );
-
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $conn;
-        } catch (PDOException $e) {
-            die("Connection failed: " . $e->getMessage());
-        }
+        return $this->conn;
     }
 }
