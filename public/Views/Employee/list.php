@@ -33,6 +33,7 @@
                     <th>Nazwisko</th>
                     <th>Stawka godzinowa</th>
                     <th>Przepracowane godziny</th>
+                    <th>Wypłata</th>
                     <th style="width:32px"></th>
                     <th style="width:32px"></th>
                     <th style="width:32px"></th>
@@ -45,6 +46,7 @@
                         <td><?= htmlspecialchars($employee['last_name']) ?></td>
                         <td><?= htmlspecialchars($employee['hourly_rate']) ?> zł/h</td>
                         <td><?= htmlspecialchars($employee['monthly_hours']) ?> h</td>
+                        <td><?= htmlspecialchars($employee['hourly_rate'] * $employee["monthly_hours"]) ?> zł</td>
                         <td>
                             <form action="/delete" method="POST" class="employee-form-button" onsubmit="return confirm('Na pewno chcesz usunąć tego pracownika?')">
                                 <input type="hidden" name="employee_id" value="<?= $employee['id'] ?>">

@@ -112,7 +112,7 @@ class EmployeeController extends AppController
     public function logHours()
     {
         if (!$this->isLoggedIn()) {
-            header('Location: /');
+            header("Location: /");
             exit;
         }
 
@@ -126,23 +126,29 @@ class EmployeeController extends AppController
             }
 
             $employee = $repo->getById((int)$id);
-            $this->render("Employee/log_hours", ["employee" => $employee]);
+            $existingLogs = $repo->getHoursForMonth((int)$id, date('Y-m-01'));
+
+            $days = [];
+            $date = new DateTime('first day of this month');
+            $end = new DateTime('last day of this month');
+
+            while ($date <= $end) {
+                $days[] = clone $date;
+                $date->modify('+1 day');
+            }
+
+            $this->render("Employee/log_hours", [
+                'employee' => $employee,
+                'days' => $days,
+                'existing' => $existingLogs
+            ]);
         }
 
         if ($this->getRequestMethod() === 'POST') {
-            $employeeId = $_POST['employee_id'] ?? null;
-            $date = $_POST['date'] ?? '';
-            $hours = $_POST['hours'] ?? '';
+            $employeeId = $_POST['employee_id'];
+            $hours = $_POST['hours'] ?? [];
 
-            if (!$employeeId || !$date || !$hours || !is_numeric($hours)) {
-                $this->render("Employee/log_hours", [
-                    "error" => "Wszystkie pola są wymagane.",
-                    "employee" => ["id" => $employeeId]
-                ]);
-                return;
-            }
-
-            $repo->logHours((int)$employeeId, $date, (float)$hours);
+            $repo->saveMultipleDays((int)$employeeId, $hours);
             header("Location: /employees");
             exit;
         }

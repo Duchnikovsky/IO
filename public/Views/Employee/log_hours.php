@@ -17,25 +17,26 @@
 
     <h1>Zarejestruj godziny pracy</h1>
 
-    <?php if (isset($employee)): ?>
-        <form method="POST" action="/logHours" class="employee-form">
-            <input type="hidden" name="employee_id" value="<?= htmlspecialchars($employee['id']) ?>">
+    <form method="POST" action="/logHours" class="employee-form">
+        <input type="hidden" name="employee_id" value="<?= $employee['id'] ?>">
 
-            <div class="employee-input">
-                <label for="date">Data</label>
-                <input id="date" type="date" name="date" class="input" required>
-            </div>
+        <div class="callendar-grid">
+            <?php foreach ($days as $day): ?>
+                <div class="callendar-cell">
+                    <label><?= $day->format('d.m') ?></label>
+                    <input type="number"
+                        step="0.25"
+                        min="0"
+                        name="hours[<?= $day->format('Y-m-d') ?>]"
+                        class="hours-input"
+                        value="<?= $existing[$day->format('Y-m-d')] ?? '' ?>">
+                </div>
+            <?php endforeach; ?>
+        </div>
 
-            <div class="employee-input">
-                <label for="hours">Liczba godzin</label>
-                <input id="hours" type="number" name="hours" class="input" step="0.25" min="0" required>
-            </div>
-
-            <button type="submit">Zapisz</button>
-        </form>
-    <?php else: ?>
-        <p>Nie znaleziono pracownika.</p>
-    <?php endif; ?>
+        <br>
+        <button type="submit">Zapisz wszystkie</button>
+    </form>
 
     <a href="/employees">← Wróć do listy</a>
 

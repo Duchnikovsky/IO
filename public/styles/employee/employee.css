@@ -107,3 +107,29 @@ form {
 .employee-btn {
     width: 80px;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.callendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    .callendar-cell {
+        border: 1px solid var(--neutral-white);
+        padding: 8px;
+
+        .hours-input {
+            min-width: 60px;
+            text-align: center;
+            padding: 0;
+        }
+    }
+}

@@ -84,7 +84,25 @@ class EmployeeRepository extends Repository
         ]);
     }
 
-    public function logHours(int $employeeId, string $date, float $hours): void
+    public function getHoursForMonth(int $employeeId, string $startOfMonth): array
+    {
+        $stmt = $this->db->connect()->prepare("
+        SELECT date, hours_worked
+        FROM work_logs
+        WHERE employee_id = :id
+        AND DATE_TRUNC('month', date) = DATE_TRUNC('month', CAST(:start AS DATE))
+    ");
+        $stmt->execute([
+            'id' => $employeeId,
+            'start' => $startOfMonth
+        ]);
+
+        $results = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+        return $results ?: [];
+    }
+
+
+    public function saveMultipleDays(int $employeeId, array $hoursByDay): void
     {
         $stmt = $this->db->connect()->prepare("
         INSERT INTO work_logs (employee_id, date, hours_worked)
@@ -92,10 +110,17 @@ class EmployeeRepository extends Repository
         ON CONFLICT (employee_id, date)
         DO UPDATE SET hours_worked = EXCLUDED.hours_worked
     ");
-        $stmt->execute([
-            'employee_id' => $employeeId,
-            'date' => $date,
-            'hours' => $hours
-        ]);
+
+        foreach ($hoursByDay as $date => $hours) {
+            if ($hours === '' || !is_numeric($hours)) {
+                continue;
+            }
+
+            $stmt->execute([
+                'employee_id' => $employeeId,
+                'date' => $date,
+                'hours' => $hours
+            ]);
+        }
     }
 }
