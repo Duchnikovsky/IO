@@ -17,12 +17,14 @@ Routing::get('register',   'DefaultController');
 Routing::get('dashboard',  'DashboardController');
 Routing::get('employees',  'EmployeeController');
 Routing::get('add',        'EmployeeController');
+Routing::get('edit',       'EmployeeController');
 
 /* API */
 Routing::post('login',     'AuthController');
 Routing::post('register',  'AuthController');
-Routing::get ('logout',    'AuthController');
+Routing::get('logout',    'AuthController');
 Routing::post('add',       'EmployeeController');
 Routing::post('delete',    'EmployeeController');
+Routing::post('edit',    'EmployeeController');
 
 Routing::run($path);

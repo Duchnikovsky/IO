@@ -39,4 +39,39 @@ class EmployeeRepository extends Repository
             'user_id' => $userId
         ]);
     }
+
+    public function getById($id)
+    {
+        $stmt = $this->db->connect()->prepare("SELECT * FROM employees WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateEmployee($id, $firstName, $lastName, $hourlyRate)
+    {
+        $stmt = $this->db->connect()->prepare("UPDATE employees SET first_name = :first, last_name = :last, hourly_rate = :rate WHERE id = :id");
+        $stmt->execute([
+            'first' => $firstName,
+            'last' => $lastName,
+            'rate' => $hourlyRate,
+            'id' => $id
+        ]);
+    }
+
+    public function update(int $id, string $firstName, string $lastName, float $hourlyRate): void
+    {
+        $stmt = $this->db->connect()->prepare("
+        UPDATE employees
+        SET first_name = :first_name,
+            last_name = :last_name,
+            hourly_rate = :hourly_rate
+        WHERE id = :id
+    ");
+        $stmt->execute([
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'hourly_rate' => $hourlyRate,
+            'id' => $id
+        ]);
+    }
 }

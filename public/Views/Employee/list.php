@@ -32,7 +32,8 @@
                     <th>Imię</th>
                     <th>Nazwisko</th>
                     <th>Stawka godzinowa</th>
-                    <th style="width:80px"></th> <!-- kolumna na kosz -->
+                    <th style="width:32px"></th>
+                    <th style="width:32px"></th>
                 </tr>
             </thead>
             <tbody>
@@ -42,10 +43,17 @@
                         <td><?= htmlspecialchars($employee['last_name']) ?></td>
                         <td><?= htmlspecialchars($employee['hourly_rate']) ?> zł/h</td>
                         <td>
-                            <form action="/delete" method="POST" onsubmit="return confirm('Na pewno chcesz usunąć tego pracownika?')">
+                            <form action="/delete" method="POST" class="employee-form-button" onsubmit="return confirm('Na pewno chcesz usunąć tego pracownika?')">
                                 <input type="hidden" name="employee_id" value="<?= $employee['id'] ?>">
-                                <button type="submit" class="trash-btn">🗑️</button>
+                                <button type="submit" class="employee-btn">🗑️</button>
                             </form>
+                        </td>
+                        <td>
+                            <a class="employee-form-button" href="edit?id=<?= $employee['id'] ?>">
+                                <button type="button" class="employee-btn">
+                                    ⚙️
+                                </button>
+                            </a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
